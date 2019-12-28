@@ -16,6 +16,10 @@ jobs:
           ref: 'master'
           fetch-depth: 0
 
+      - name: debug info
+        run: |
+          git tag --sort=taggerdate
+
       - name: Set Node.js version 12.14.0
         uses: actions/setup-node@v1
         with:
@@ -51,12 +55,13 @@ jobs:
           tag_name: ${{ steps.naming.outputs.version }}
           release_name: Release ${{ steps.naming.outputs.version }}
           body: |
-            #### Release overview
+            ## KiwiIRC ${{ steps.naming.outputs.version }}
+            #### Overview
             - Main change 1
             - Main change 2
 
             Commits: https://github.com/${{ github.repository }}/compare/${{ steps.naming.outputs.lasttag}}...${{ steps.naming.outputs.version }}
-          draft: false
+          draft: true
           prerelease: false
 
       - name: Upload Release
