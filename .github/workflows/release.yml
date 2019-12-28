@@ -50,6 +50,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./kiwiirc_${{ github.ref }}.zip
-          asset_name: kiwiirc_${{ github.ref }}.zip
+          asset_path: kiwiirc_${{ steps.get_version.outputs.version }}.zip
+          asset_name: kiwiirc_${{ steps.get_version.outputs.version }}.zip
           asset_content_type: application/zip
