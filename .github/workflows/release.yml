@@ -18,7 +18,7 @@ jobs:
 
       - name: debug info
         run: |
-          echo ::log-command parameter1=d1::${sh -c 'echo $(git tag --sort=taggerdate)'}
+          echo ::log-command parameter1=d1::$(git tag --sort=taggerdate)
           sh -c 'echo $(git tag --sort=taggerdate)'
 
       - name: Set Node.js version 12.14.0
@@ -31,7 +31,7 @@ jobs:
         run: |
           echo ::set-output name=version::${GITHUB_REF/refs\/tags\//}
           echo ::set-output name=yarncache::$(yarn cache dir)
-          echo ::set-output name=lasttag::${git tag --sort=taggerdate | tail -2 | head -1}
+          echo ::set-output name=lasttag::$(git tag --sort=taggerdate | tail -2 | head -1)
 
       - uses: actions/cache@v1
         with:
