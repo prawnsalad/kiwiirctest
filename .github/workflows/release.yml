@@ -16,11 +16,8 @@ jobs:
           ref: 'master'
           fetch-depth: 0
 
-      - name: debug info
-        run: |
-          git fetch origin +refs/tags/*:refs/tags/*
-          echo ::log-command parameter1=d1::$(git tag --sort=taggerdate)
-          sh -c 'echo $(git tag --sort=taggerdate)'
+      - name: Collect repository tags
+        run: git fetch origin +refs/tags/*:refs/tags/*
 
       - name: Set Node.js version 12.14.0
         uses: actions/setup-node@v1
@@ -32,7 +29,6 @@ jobs:
         run: |
           echo ::set-output name=version::${GITHUB_REF/refs\/tags\//}
           echo ::set-output name=yarncache::$(yarn cache dir)
-          git fetch origin +refs/tags/*:refs/tags/*
           echo ::set-output name=lasttag::$(git tag --sort=taggerdate | tail -2 | head -1)
 
       - uses: actions/cache@v1
@@ -51,7 +47,7 @@ jobs:
 
       - name: Create Release
         id: create_release
-        uses: actions/create-release@v1
+        uses: actions/create-release@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
