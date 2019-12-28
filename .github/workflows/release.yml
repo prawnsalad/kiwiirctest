@@ -15,10 +15,10 @@ jobs:
         with:
           ref: 'master'
           fetch-depth: 0
-        run: git fetch origin +refs/tags/*:refs/tags/*
 
       - name: debug info
         run: |
+          git fetch origin +refs/tags/*:refs/tags/*
           echo ::log-command parameter1=d1::$(git tag --sort=taggerdate)
           sh -c 'echo $(git tag --sort=taggerdate)'
 
@@ -32,6 +32,7 @@ jobs:
         run: |
           echo ::set-output name=version::${GITHUB_REF/refs\/tags\//}
           echo ::set-output name=yarncache::$(yarn cache dir)
+          git fetch origin +refs/tags/*:refs/tags/*
           echo ::set-output name=lasttag::$(git tag --sort=taggerdate | tail -2 | head -1)
 
       - uses: actions/cache@v1
