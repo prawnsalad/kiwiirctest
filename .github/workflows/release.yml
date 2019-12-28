@@ -35,7 +35,7 @@ jobs:
       - uses: actions/cache@v1
         with:
           path: ${{ steps.naming.outputs.yarncache }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
 
@@ -60,7 +60,7 @@ jobs:
             - Main change 1
             - Main change 2
 
-            Commits: https://github.com/${{ github.repository }}/compare/${{ steps.naming.outputs.lasttag}}...${{ steps.naming.outputs.version }}
+            Commits: https://github.com/${{ github.repository }}/compare/${{ steps.naming.outputs.lasttag }}...${{ steps.naming.outputs.version }}
           draft: true
           prerelease: false
 
