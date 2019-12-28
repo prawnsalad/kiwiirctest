@@ -23,6 +23,7 @@ jobs:
         run: |
           echo ::set-output name=version::${GITHUB_REF/refs\/tags\//}
           echo ::set-output name=yarncache::$(yarn cache dir)
+          echo ::set-output name=lasttag::$(git tag | tail -2 | head -1)
 
       - uses: actions/cache@v1
         with:
@@ -47,9 +48,7 @@ jobs:
           tag_name: ${{ steps.naming.outputs.version }}
           release_name: Release ${{ steps.naming.outputs.version }}
           body: |
-            Changes in this Release
-            - First Change
-            - Second Change
+            Commits: https://github.com/prawnsalad/kiwiirctest/compare/steps.naming.outputs.lasttag...${{ steps.naming.outputs.version }}
           draft: true
           prerelease: false
 
