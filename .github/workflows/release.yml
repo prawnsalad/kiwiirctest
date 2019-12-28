@@ -28,7 +28,7 @@ jobs:
         run: yarn
 
       - name: Build & zip
-        run: yarn build && zip -r kiwiirc_${{ get_version.output }}.zip dist/*
+        run: yarn build && zip -r kiwiirc_${{ steps.get_version.output }}.zip dist/*
 
       - name: Create Release
         id: create_release
