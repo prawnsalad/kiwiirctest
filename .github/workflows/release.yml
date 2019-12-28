@@ -1,7 +1,5 @@
 on:
   push:
-    branches:
-      - master
     tags:
       - 'v*'
 
@@ -22,13 +20,13 @@ jobs:
 
       - name: Get the version
         id: get_version
-        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+        run: echo ::set-output name=version::${GITHUB_REF/refs\/tags\//}
 
       - name: Install packages
         run: yarn
 
       - name: Build & zip
-        run: yarn build && zip -r kiwiirc_${{ steps.get_version.output }}.zip dist/*
+        run: yarn build && zip -r kiwiirc_${{ steps.get_version.outputs.version }}.zip dist/*
 
       - name: Create Release
         id: create_release
@@ -36,8 +34,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
-          tag_name: ${{ steps.get_version.output }}
-          release_name: Release ${{ steps.get_version.output }}
+          tag_name: ${{ steps.get_version.outputs.version }}
+          release_name: Release ${{ steps.get_version.outputs.version }}
           body: |
             Changes in this Release
             - First Change
