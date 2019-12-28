@@ -28,7 +28,7 @@ jobs:
       - uses: actions/cache@v1
         with:
           path: ${{ steps.naming.outputs.yarncache }}
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-yarn-
 
@@ -48,8 +48,8 @@ jobs:
           tag_name: ${{ steps.naming.outputs.version }}
           release_name: Release ${{ steps.naming.outputs.version }}
           body: |
-            Commits: https://github.com/prawnsalad/kiwiirctest/compare/steps.naming.outputs.lasttag...${{ steps.naming.outputs.version }}
-          draft: true
+            Commits: https://github.com/prawnsalad/kiwiirctest/compare/${{ steps.naming.outputs.lasttag}}...${{ steps.naming.outputs.version }}
+          draft: false
           prerelease: false
 
       - name: Upload Release
