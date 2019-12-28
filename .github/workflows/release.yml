@@ -59,7 +59,7 @@ jobs:
             - Main change 1
             - Main change 2
 
-            Commits: https://github.com/${{ github.repository }}/compare/${{ steps.naming.outputs.lasttag }}...${{ steps.naming.outputs.version }}
+            Changes: https://github.com/${{ github.repository }}/compare/${{ steps.naming.outputs.lasttag }}...${{ steps.naming.outputs.version }}
           draft: true
           prerelease: false
 
