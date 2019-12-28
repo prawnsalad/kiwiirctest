@@ -1,5 +1,7 @@
 on:
   push:
+    branches:
+      - master
     tags:
       - 'v*'
 
@@ -18,11 +20,15 @@ jobs:
         with:
           node-version: '12.14.0'
 
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+
       - name: Install packages
         run: yarn
 
       - name: Build & zip
-        run: zip -r kiwiirc_${{ github.ref }}.zip dist/
+        run: yarn build && zip -r kiwiirc_${{ get_version.output }}.zip dist/*
 
       - name: Create Release
         id: create_release
@@ -30,8 +36,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          tag_name: ${{ get_version.output }}
+          release_name: Release ${{ steps.get_version.output }}
           body: |
             Changes in this Release
             - First Change
