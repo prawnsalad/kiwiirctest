@@ -18,7 +18,7 @@ jobs:
 
       - name: debug info
         run: |
-          sh -c 'git tag --sort=taggerdate | tail -2 | head -1'
+          sh -c 'echo $(git tag --sort=taggerdate)'
 
       - name: Set Node.js version 12.14.0
         uses: actions/setup-node@v1
